@@ -7,6 +7,12 @@
 
 (简单说一下:当dde-dock和dde-top-panel加载该插件时,插件会通过启用/禁用自己以刷新自己在dock/top-panel中的视图. 具体怎么做,看源码中的注释)
 
+## 26.6.8更新
+允许用户设置各个item的大小
+
+截图:
+
+![2p1.png](screenshots/2p1.png)
 ## 截图
 ![1p1.png](screenshots/1p1.png)
 

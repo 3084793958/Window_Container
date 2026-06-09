@@ -38,12 +38,14 @@ public:
     void normal_window_size_action();
     void close_window_action();
     void click_window_action();
+    void set_size_action();
     void active_window();
     bool is_window_hidden();
     QString get_text();
 private:
     Window targetWindow = 0;
     int *plugin_pos_ptr = nullptr;
+    QSize item_size = QSize(0, 0);
 private:
     QLabel *m_iconLabel = new QLabel(this);
     Towards_Label *m_titleLabel = new Towards_Label(this, &plugin_pos_ptr);

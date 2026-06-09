@@ -77,6 +77,10 @@ void WindowItem::set_short_border(int border)
         m_statusLine->move(0, 0);
         QWidget::resize(border, m_titleLabel->y() + m_titleLabel->height());
     }
+    if (item_size.isValid() && item_size != QSize(0, 0))
+    {
+        QWidget::resize(item_size);
+    }
 }
 static Atom net_wm_state()
 {
@@ -216,6 +220,22 @@ void WindowItem::click_window_action()
         hide_window_action();
     }
 }
+void WindowItem::set_size_action()
+{
+    bool ok = false;
+    int new_width = QInputDialog::getInt(nullptr, tr("获取数值"), tr("输入width:\n若width和height都为0,则会以默认大小显示"), item_size.width(), 0, 2147483647, 1, &ok);
+    if (!ok)
+    {
+        return;
+    }
+    ok = false;
+    int new_height = QInputDialog::getInt(nullptr, tr("获取数值"), tr("输入height:\n若width和height都为0,则会以默认大小显示"), item_size.height(), 0, 2147483647, 1, &ok);
+    if (!ok)
+    {
+        return;
+    }
+    item_size = QSize(new_width, new_height);
+}
 bool WindowItem::is_window_hidden()
 {
     bool is_hidden = false;
@@ -243,7 +263,6 @@ bool WindowItem::is_window_hidden()
     }
     return is_hidden;
 }
-
 QString WindowItem::get_text()
 {
     QString text = m_titleLabel->text();

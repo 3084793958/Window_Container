@@ -30,6 +30,9 @@ private:
     QAction *remove_this_window_action = new QAction(tr("移除该窗口"), this);
     QAction *set_window_index_action = new QAction(tr("修改窗口索引"), this);
 
+    QAction *refresh_size_action = new QAction(tr("刷新插件大小"), this);
+    QAction *set_size_action = new QAction(tr("设置item大小"), this);
+
     QMenu *style_set_menu = new QMenu(tr("外观设置"), this);
     QAction *set_text_font_action = new QAction(tr("设置字体"), this);
     QAction *set_text_color_action = new QAction(tr("设置文字颜色"), this);

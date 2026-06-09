@@ -15,6 +15,9 @@ Plugin_Item_Widget::Plugin_Item_Widget(QList<WindowItem *> *m_windowitem_list_pt
     menu->addAction(remove_this_window_action);
     menu->addAction(set_window_index_action);
     menu->addSeparator();
+    menu->addAction(refresh_size_action);
+    menu->addAction(set_size_action);
+    menu->addSeparator();
     style_set_menu->addAction(set_text_font_action);
     style_set_menu->addAction(set_text_color_action);
     style_set_menu->addAction(set_status_color_active_action);
@@ -122,6 +125,22 @@ void Plugin_Item_Widget::contextMenuEvent(QContextMenuEvent *event)
                 return;
             }
         }
+    }
+    else if (know_what == set_size_action)
+    {
+        for (int i = 0; i < windowitem_list_ptr->count(); ++i)
+        {
+            if (windowitem_list_ptr->at(i)->geometry().contains(event->pos()))
+            {
+                windowitem_list_ptr->at(i)->set_size_action();
+                return;
+            }
+        }
+    }
+    else if (know_what == refresh_size_action)
+    {
+        emit remove_window();
+        return;
     }
     else if (know_what == set_text_font_action)
     {
