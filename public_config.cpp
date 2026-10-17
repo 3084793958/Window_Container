@@ -39,3 +39,13 @@ void Public_Config::load()
     container_height = settings.value("container_height", 24).toInt();
     settings.endGroup();
 }
+void Public_Config::apply_host_theme(const QFont &font,
+                                     const QColor &text,
+                                     const QColor &active,
+                                     const QColor &inactive)
+{
+    if (!font.family().isEmpty()) text_font = font;
+    if (text.isValid())           text_color = text;
+    if (active.isValid())         status_active_color = active;
+    if (inactive.isValid())       status_color = inactive;
+}

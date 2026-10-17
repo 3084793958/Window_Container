@@ -11,9 +11,10 @@
 #include <QIcon>
 #include <QtCore>
 
-#include <QMenu>
 
 #include "interfaces/easy_desktop_class.h"
+
+class QMenu;
 
 ///
 /// \brief The PluginsItemInterface class
@@ -36,7 +37,8 @@ public:
     //ADD
 
     //for Easy_Desktop
-    P_Version Plugin_Version{0, 0, 1};//不使用const,用于欺骗Easy_Desktop
+    P_Version Plugin_Version{0, 0, 3};//不使用const,用于欺骗Easy_Desktop
+
     //最低版本号:0.0.1
     //for Easy_Desktop
 
@@ -52,7 +54,7 @@ public:
     /// \brief ~PluginsItemInterface
     /// DON'T try to delete m_proxyInter.
     ///
-    virtual ~PluginsItemInterface() {}
+    virtual ~PluginsItemInterface();
 
     ///
     /// \brief pluginName
@@ -60,7 +62,7 @@ public:
     /// \return
     ///
     virtual const QString pluginName() const = 0;
-    virtual const QString pluginDisplayName() const { return QString(); }
+    virtual const QString pluginDisplayName() const;
 
     ///
     /// \brief init
@@ -87,7 +89,7 @@ public:
     /// \param itemKey
     /// \return
     ///
-    virtual QWidget *itemTipsWidget(const QString &itemKey) {Q_UNUSED(itemKey); return nullptr;}
+    virtual QWidget *itemTipsWidget(const QString &itemKey);
     ///
     /// \brief itemPopupApplet
     /// override this function if your item wants to have an popup applet.
@@ -101,7 +103,7 @@ public:
     /// \param itemKey
     /// \return
     ///
-    virtual QWidget *itemPopupApplet(const QString &itemKey) {Q_UNUSED(itemKey); return nullptr;}
+    virtual QWidget *itemPopupApplet(const QString &itemKey);
     ///
     /// \brief itemCommand
     /// execute spec command when user clicked your item.
@@ -111,7 +113,7 @@ public:
     /// \param itemKey
     /// \return
     ///
-    virtual const QString itemCommand(const QString &itemKey) {Q_UNUSED(itemKey); return QString();}
+    virtual const QString itemCommand(const QString &itemKey);
 
     ///
     /// \brief itemContextMenu
@@ -119,7 +121,7 @@ public:
     /// \param itemKey
     /// \return
     ///
-    virtual const QString itemContextMenu(const QString &itemKey) {Q_UNUSED(itemKey); return QString();}
+    virtual const QString itemContextMenu(const QString &itemKey);
     ///
     /// \brief invokedMenuItem
     /// call if context menu item is clicked
@@ -128,7 +130,7 @@ public:
     /// menu item id
     /// \param checked
     ///
-    virtual void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) {Q_UNUSED(itemKey); Q_UNUSED(menuId); Q_UNUSED(checked);}
+    virtual void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked);
 
     ///
     /// \brief itemSortKey
@@ -140,7 +142,7 @@ public:
     /// \param itemKey
     /// \return
     ///
-    virtual int itemSortKey(const QString &itemKey) {Q_UNUSED(itemKey); return 1;}
+    virtual int itemSortKey(const QString &itemKey);
     ///
     /// \brief setSortKey
     /// save your item new position
@@ -149,7 +151,7 @@ public:
     /// \param itemKey
     /// \param order
     ///
-    virtual void setSortKey(const QString &itemKey, const int order) {Q_UNUSED(itemKey); Q_UNUSED(order);}
+    virtual void setSortKey(const QString &itemKey, const int order);
 
     ///
     /// \brief itemAllowContainer
@@ -160,7 +162,7 @@ public:
     /// \param itemKey
     /// \return
     ///
-    virtual bool itemAllowContainer(const QString &itemKey) {Q_UNUSED(itemKey); return false;}
+    virtual bool itemAllowContainer(const QString &itemKey);
     ///
     /// \brief itemIsInContainer
     /// tell dock your item is in container, this function
@@ -168,7 +170,7 @@ public:
     /// \param itemKey
     /// \return
     ///
-    virtual bool itemIsInContainer(const QString &itemKey) {Q_UNUSED(itemKey); return false;}
+    virtual bool itemIsInContainer(const QString &itemKey);
     ///
     /// \brief setItemIsInContainer
     /// save your item new state.
@@ -178,24 +180,24 @@ public:
     /// \param itemKey
     /// \param container
     ///
-    virtual void setItemIsInContainer(const QString &itemKey, const bool container) {Q_UNUSED(itemKey); Q_UNUSED(container);}
+    virtual void setItemIsInContainer(const QString &itemKey, const bool container);
 
-    virtual bool pluginIsAllowDisable() { return false; }
-    virtual bool pluginIsDisable() { return false; }
-    virtual void pluginStateSwitched() {}
+    virtual bool pluginIsAllowDisable();
+    virtual bool pluginIsDisable();
+    virtual void pluginStateSwitched();
 
     ///
     /// \brief displayModeChanged
     /// override this function to receive display mode changed signal
     /// \param displayMode
     ///
-    virtual void displayModeChanged(const Dock::DisplayMode displayMode) {Q_UNUSED(displayMode);}
+    virtual void displayModeChanged(const Dock::DisplayMode displayMode);
     ///
     /// \brief positionChanged
     /// override this function to receive dock position changed signal
     /// \param position
     ///
-    virtual void positionChanged(const Dock::Position position) {Q_UNUSED(position);}
+    virtual void positionChanged(const Dock::Position position);
 
     ///
     /// \brief refreshIcon
@@ -203,49 +205,43 @@ public:
     /// \param itemKey
     /// item key
     ///
-    virtual void refreshIcon(const QString &itemKey) { Q_UNUSED(itemKey); }
+    virtual void refreshIcon(const QString &itemKey);
 
     ///
     /// \brief displayMode
     /// get current dock display mode
     /// \return
     ///
-    inline Dock::DisplayMode displayMode() const
-    {
-        return qApp->property(PROP_DISPLAY_MODE).value<Dock::DisplayMode>();
-    }
+    inline Dock::DisplayMode displayMode() const;
 
     ///
     /// \brief position
     /// get current dock position
     /// \return
     ///
-    inline Dock::Position position() const
-    {
-        return qApp->property(PROP_POSITION).value<Dock::Position>();
-    }
+    inline Dock::Position position() const;
 
     ///
     /// \brief settingsChanged
     /// override this function to receive plugin settings changed signal(DeepinSync)
     ///
-    virtual void pluginSettingsChanged() {}
+    virtual void pluginSettingsChanged();
 
     ///
     /// \brief type
     /// default plugin add dock right,fixed plugin add to dock fixed area
     ///
-    virtual PluginType type() { return Normal; }
+    virtual PluginType type();
 
     ///
     /// \brief plugin size policy
     /// default plugin size policy
     ///
-    virtual PluginSizePolicy pluginSizePolicy() const { return System; }
+    virtual PluginSizePolicy pluginSizePolicy() const;
 
     //for Easy_Desktop 0.0.1
-    virtual bool pluginIsAllowUnload() { return false; }
-    virtual void pluginUnload() {}
+    virtual bool pluginIsAllowUnload();
+    virtual void pluginUnload();
     //
     enum class Carrier_Type
     {
@@ -254,114 +250,99 @@ public:
         Plugin_Popup,
         Plugin_Tips
     };
-    virtual void pluginGetSender(P_Sender * const update_sender, P_Sender * const send_data_sender)
-    {
-        (void) update_sender;
-        (void) send_data_sender;
-    }
-    virtual QPair<int, int> pluginSetCarrierSpacing(Carrier_Type carrier_type, bool *isValid)
-    {
-        (void) carrier_type;
-        *isValid = false;
-        return qMakePair(0, 0);
-    }
-    virtual void pluginGetCarrierSpacing(Carrier_Type carrier_type, int distance_width, int distance_height)
-    {
-        (void) carrier_type;
-        (void) distance_width;
-        (void) distance_height;
-    }
-    virtual QPair<int, int> pluginSetCarrierOffset(Carrier_Type carrier_type, bool *isValid)
-    {
-        (void) carrier_type;
-        *isValid = false;
-        return qMakePair(0, 0);
-    }
-    virtual void pluginGetCarrierOffset(Carrier_Type carrier_type, int delta_x, int delta_y)
-    {
-        (void) carrier_type;
-        (void) delta_x;
-        (void) delta_y;
-    }
-    virtual QColor pluginSetCarrierColor(Carrier_Type carrier_type, bool *isValid)
-    {
-        (void) carrier_type;
-        *isValid = false;
-        return QColor();
-    }
-    virtual void pluginGetCarrierColor(Carrier_Type carrier_type, QColor background_color)
-    {
-        (void) carrier_type;
-        (void) background_color;
-    }
-    virtual int pluginSetCarrierRadius(Carrier_Type carrier_type, bool *isValid)
-    {
-        (void) carrier_type;
-        *isValid = false;
-        return 0;
-    }
-    virtual void pluginGetCarrierRadius(Carrier_Type carrier_type, int radius)
-    {
-        (void) carrier_type;
-        (void) radius;
-    }
-    virtual QSize pluginSetCarrierSize(Carrier_Type carrier_type, bool *isValid)
-    {
-        (void) carrier_type;
-        *isValid = false;
-        return QSize();
-    }
-    virtual void pluginGetCarrierQMenu(Carrier_Type carrier_type, QMenu *menu, P_Sender * const action_sender)
-    {
-        (void) carrier_type;
-        (void) menu;
-        (void) action_sender;
-    }
-    virtual QPair<QMenu *, P_Sender * const> pluginAddToCarrierQMenu(Carrier_Type carrier_type, bool *isValid)
-    {
-        (void) carrier_type;
-        *isValid = false;
-        return QPair<QMenu *, P_Sender * const>(nullptr, nullptr);
-    }
-    virtual QSize pluginSetWidgetSize(Carrier_Type carrier_type, bool *isValid)
-    {
-        (void) carrier_type;
-        *isValid = false;
-        return QSize();
-    }
-    virtual QPoint pluginSetCarrierPos(Carrier_Type carrier_type, QPoint item_pos, QSize item_size, bool *isValid)
-    {
-        (void) carrier_type;
-        (void) item_pos;
-        (void) item_size;
-        *isValid = false;
-        return QPoint();
-    }
-    virtual int pluginSetCarrierPage(Carrier_Type carrier_type, int total_page, bool *isValid)
-    {
-        (void) carrier_type;
-        (void) total_page;
-        *isValid = false;
-        return 0;
-    }
-    virtual void pluginGetIsMouseInPluginCarrier(Carrier_Type carrier_type, bool result)//用于给music-island打补丁
-    {
-        (void) carrier_type;
-        (void) result;
-    }
-    virtual void pluginGetShowCarrierCloseButton(Carrier_Type carrier_type, bool result)
-    {
-        (void) carrier_type;
-        (void) result;
-    }
-    virtual bool pluginSetShowCarrierCloseButton(Carrier_Type carrier_type, bool *isValid)
-    {
-        (void) carrier_type;
-        *isValid = false;
-        return false;
-    }
+    virtual void pluginGetSender(P_Sender * const update_sender, P_Sender * const send_data_sender);
+    virtual QPair<int, int> pluginSetCarrierSpacing(Carrier_Type carrier_type, bool *isValid);
+    virtual void pluginGetCarrierSpacing(Carrier_Type carrier_type, int distance_width, int distance_height);
+    virtual QPair<int, int> pluginSetCarrierOffset(Carrier_Type carrier_type, bool *isValid);
+    virtual void pluginGetCarrierOffset(Carrier_Type carrier_type, int delta_x, int delta_y);
+    virtual QColor pluginSetCarrierColor(Carrier_Type carrier_type, bool *isValid);
+    virtual void pluginGetCarrierColor(Carrier_Type carrier_type, QColor background_color);
+    virtual int pluginSetCarrierRadius(Carrier_Type carrier_type, bool *isValid);
+    virtual void pluginGetCarrierRadius(Carrier_Type carrier_type, int radius);
+    virtual QSize pluginSetCarrierSize(Carrier_Type carrier_type, bool *isValid);
+    virtual void pluginGetCarrierQMenu(Carrier_Type carrier_type, QMenu *menu, P_Sender * const action_sender);
+    virtual QPair<QMenu *, P_Sender * const> pluginAddToCarrierQMenu(Carrier_Type carrier_type, bool *isValid);
+    virtual QSize pluginSetWidgetSize(Carrier_Type carrier_type, bool *isValid);
+    virtual QPoint pluginSetCarrierPos(Carrier_Type carrier_type, QPoint item_pos, QSize item_size, bool *isValid);
+    virtual int pluginSetCarrierPage(Carrier_Type carrier_type, int total_page, bool *isValid);
+    virtual void pluginGetIsMouseInPluginCarrier(Carrier_Type carrier_type, bool result);
+    virtual void pluginGetShowCarrierCloseButton(Carrier_Type carrier_type, bool result);
+    virtual bool pluginSetShowCarrierCloseButton(Carrier_Type carrier_type, bool *isValid);
     //for Easy_Desktop 0.0.1
     //不会修改PluginProxyInterface,无法控制插件怎么调用,只能控制Easy_Desktop怎么调用,至于插件主动更新,用P_Sender
+
+    //V_0.0.2
+    ///
+    /// \brief Trans_Update
+    /// 告诉插件:翻译动态更新了
+    ///
+    virtual void Trans_Update();
+    //V_0.0.2
+
+    //V_0.0.3
+    ///
+    /// \brief update_style_V2
+    /// 主题风格设置V2
+    /// \param m_theme_color
+    /// \param m_theme_background_color
+    /// \param m_theme_text_color
+    /// \param m_select_text_color
+    /// \param m_disabled_text_color
+    /// \param m_checked_icon_path
+    /// \param m_checked_and_selected_icon_path
+    /// \param m_radius
+    /// \param m_icon_size
+    /// \param m_separator_color
+    /// \param m_min_width
+    /// \param m_on_blurring_type
+    /// \param m_text_font
+    /// \param m_menu_outline_color
+    /// \param m_menu_outline_width
+    /// \param m_blur_radius
+    /// \param m_highlight_color
+    ///
+    virtual void update_style_V2(QColor  m_theme_color,
+                                 QColor  m_theme_background_color,
+                                 QColor  m_theme_text_color,
+                                 QColor  m_select_text_color,
+                                 QColor  m_disabled_text_color,
+                                 const QString & m_checked_icon_path,
+                                 const QString & m_checked_and_selected_icon_path,
+                                 int     m_radius,
+                                 int     m_icon_size,
+                                 QColor  m_separator_color,
+                                 int     m_min_width,
+                                 int     m_on_blurring_type,
+                                 QFont   m_text_font,
+                                 QColor  m_menu_outline_color,
+                                 int     m_menu_outline_width,
+                                 int     m_blur_radius,
+                                 QColor  m_highlight_color);
+    ///
+    /// \brief call_plugin_save
+    /// 通知保存
+    ///
+    virtual void call_plugin_save();
+
+    ///
+    /// \brief init_V_0_0_3
+    /// loaderNames会为你提供当前Easy_Desktop拥有的loader的QString.
+    /// ,seek_loader_sender用于请求loader指针, recive_loader_sender用于获取loader指针.无论怎样都会返回,若没有这个loader,会给nullptr.
+    /// 注意:seek_loader_sender只走Send_Data路线,请发送一个QString(这里是全匹配,没有模糊匹配),
+    /// recive_loader_sender只走Send_Ptr路线,给出void *,需要自行转化.Easy_Desktop不会负责除这两条线外的其他路线
+    /// \param loaderNames
+    /// \param seek_loader_sender
+    /// \param recive_loader_sender
+    ///
+    virtual void init_V_0_0_3(const QStringList &loaderNames, const P_Sender *seek_loader_sender, const P_Sender *recive_loader_sender);
+
+    ///
+    /// \brief easy_desktop_version
+    /// 宿主调用, 告知插件当前 Easy_Desktop 的版本信息与 AKA 名称
+    /// 插件可通过此回调做兼容性判断
+    ///
+    virtual void easy_desktop_version(const P_Version &Easy_Desktop_Version, const QString &AKA_name);
+    //V_0.0.3
 
 protected:
     ///

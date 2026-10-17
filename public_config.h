@@ -14,6 +14,11 @@ struct Public_Config
     static int container_height;
     static void save();
     static void load();
+    // 新增：宿主主题覆盖（仅内存生效，不写盘）
+    static void apply_host_theme(const QFont &font,
+                                 const QColor &text,
+                                 const QColor &active,
+                                 const QColor &inactive);
 };
 
 #endif // PUBLIC_CONFIG_H

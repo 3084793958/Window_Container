@@ -1,19 +1,28 @@
 #ifndef WINDOWITEM_H
 #define WINDOWITEM_H
 
+// 顺序：Qt -> Xlib -> undef
 #include <QtWidgets>
 
 #include <X11/Xlib.h>
-#include <QX11Info>
 #include <X11/Xatom.h>
-#undef Status
+
 #undef Bool
+#undef Status
+#undef CursorShape
 #undef None
 #undef KeyPress
 #undef KeyRelease
 #undef FocusIn
 #undef FocusOut
-#undef CursorShape
+#undef Expose
+#undef FontChange
+#undef Unsorted
+#undef Above
+#undef Below
+#undef Complex
+#undef Convex
+#undef Nonconvex
 
 class Towards_Label : public QLabel
 {
@@ -29,7 +38,7 @@ class WindowItem : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WindowItem(QWidget *parent, Window m_targetWindow, int *m_plugin_pos_ptr);
+    explicit WindowItem(QWidget *parent, Window m_targetWindow, int *m_plugin_pos_ptr, bool m_is_wayland = false, Display *m_display = nullptr);
     void checkWindowStatus();
     void set_short_border(int border);
     void show_window_action();
@@ -46,7 +55,8 @@ private:
     Window targetWindow = 0;
     int *plugin_pos_ptr = nullptr;
     QSize item_size = QSize(0, 0);
-private:
+    bool is_wayland = false;
+    Display *display = nullptr;
     QLabel *m_iconLabel = new QLabel(this);
     Towards_Label *m_titleLabel = new Towards_Label(this, &plugin_pos_ptr);
     QFrame *m_statusLine = new QFrame(this);
@@ -54,6 +64,7 @@ private:
     QString fetchWindowTitle();
     bool isWindowActive();
     QIcon fetchWindowIcon();
+    void show_wayland_unsupported_warning();
 public:
     bool isWindowExists();
 };

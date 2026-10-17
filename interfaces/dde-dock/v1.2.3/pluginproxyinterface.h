@@ -12,7 +12,7 @@
 //PluginProxyInterface是不能随便新增函数的
 
 class PluginsItemInterface;
-class PluginProxyInterface
+class PluginProxyInterface//没有非空虚函数,只能warning了
 {
 public:
     ///
